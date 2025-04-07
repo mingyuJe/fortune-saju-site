@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>오늘의 운세</title>
   <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <style>
     body {
       background-color: #f0fff0;
@@ -97,7 +98,29 @@
     <pre id="result"></pre>
     <p class="footer">제57대 ㅁㅁ 자연과학대학 학생회</p>
   </div>
+  <script>
+  window.onload = function () {
+    // localStorage에서 오늘 날짜 확인
+    const today = new Date().toISOString().slice(0, 10); // yyyy-mm-dd 형식
+    const dismissedDate = localStorage.getItem("popupDismissedDate");
 
+    if (dismissedDate !== today) {
+      Swal.fire({
+        title: "🌿 네잎클로버 운세",
+        html: "이름, 생년월일, 출생시를 입력하면<br>오늘의 운세를 확인할 수 있어요!",
+        icon: "info",
+        showCancelButton: true,
+        confirmButtonText: "확인",
+        cancelButtonText: "오늘 하루 보지 않기",
+        reverseButtons: true
+      }).then((result) => {
+        if (result.dismiss === Swal.DismissReason.cancel) {
+          localStorage.setItem("popupDismissedDate", today);
+        }
+      });
+    }
+  };
+</script>
   <script>
     Kakao.init('e7117b4183fc962156cd8388ea62e8dc');
 
