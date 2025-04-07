@@ -4,11 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>네잎클로버 오늘의 운세</title>
-
-  <!-- ✅ Kakao SDK -->
   <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
-
-  <!-- ✅ 스타일 -->
   <style>
     body {
       background-color: #f0fff0;
@@ -19,7 +15,6 @@
       min-height: 100vh;
       margin: 0;
     }
-
     .container {
       background-color: #ffffff;
       border-radius: 20px;
@@ -29,12 +24,10 @@
       max-width: 500px;
       text-align: center;
     }
-
     h1 {
       color: #388e3c;
       margin-bottom: 30px;
     }
-
     input, select, button {
       margin: 10px 0;
       padding: 10px;
@@ -44,7 +37,6 @@
       width: 100%;
       box-sizing: border-box;
     }
-
     button {
       background-color: #66bb6a;
       color: white;
@@ -52,17 +44,14 @@
       cursor: pointer;
       transition: background-color 0.3s;
     }
-
     button:hover {
       background-color: #4caf50;
     }
-
     .kakao-btn {
       background-color: #fee500;
       color: #000;
       margin-top: 10px;
     }
-
     pre {
       background-color: #f9f9f9;
       border-radius: 12px;
@@ -72,7 +61,6 @@
       margin-top: 20px;
       color: #333;
     }
-
     .footer {
       font-size: 12px;
       color: #888;
@@ -90,30 +78,29 @@
     <select id="birthhour">
       <option value="">출생시 선택</option>
       <option value="unknown">출생 시간을 모릅니다</option>
-      <!-- 0시~23시까지 자동 생성 -->
     </select>
 
+    <script>
+      const birthSelect = document.getElementById("birthhour");
+      for (let i = 0; i < 24; i++) {
+        const option = document.createElement("option");
+        option.value = i;
+        option.textContent = `${i}시`;
+        birthSelect.appendChild(option);
+      }
+    </script>
+
     <button onclick="getFortune()">운세 보기</button>
+    <button onclick="copyResult()">결과 복사하기</button>
     <button class="kakao-btn" onclick="shareKakao()">📤 카카오톡으로 공유하기</button>
+
     <pre id="result"></pre>
     <p class="footer">제57대 늘 자연과학대학 학생회</p>
   </div>
 
-  <!-- ✅ JavaScript는 반드시 body 끝에 위치 -->
   <script>
-    // 출생시 옵션 동적 생성
-    const birthSelect = document.getElementById("birthhour");
-    for (let i = 0; i < 24; i++) {
-      const option = document.createElement("option");
-      option.value = i;
-      option.textContent = `${i}시`;
-      birthSelect.appendChild(option);
-    }
-
-    // Kakao 초기화 (👉 반드시 본인의 JS 키로 교체하세요)
     Kakao.init('e7117b4183fc962156cd8388ea62e8dc');
 
-    // 카카오 공유 기능
     function shareKakao() {
       Kakao.Share.sendDefault({
         objectType: 'feed',
@@ -138,7 +125,6 @@
       });
     }
 
-    // 운세 조회 요청
     async function getFortune() {
       const name = document.getElementById('name').value;
       const birthdate = document.getElementById('birthdate').value;
@@ -157,6 +143,17 @@
 
       const data = await res.json();
       document.getElementById('result').innerText = data.fortune || "운세 생성에 실패했습니다.";
+    }
+
+    function copyResult() {
+      const text = document.getElementById("result").innerText;
+      if (!text) {
+        alert("복사할 운세 결과가 없습니다.");
+        return;
+      }
+      navigator.clipboard.writeText(text).then(() => {
+        alert("✅ 운세 결과가 복사되었습니다!");
+      });
     }
   </script>
 </body>
