@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>네잎클로버 사주 운세</title>
+  <style>
+    body {
+      background-color: #f0fff0;
+      font-family: 'Gowun Dodum', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      background-color: #ffffff;
+      border-radius: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      padding: 40px;
+      width: 90%;
+      max-width: 500px;
+      text-align: center;
+    }
+
+    h1 {
+      color: #388e3c;
+      margin-bottom: 30px;
+    }
+
+    input, select, button {
+      margin: 10px 0;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 12px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    button {
+      background-color: #66bb6a;
+      color: white;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #4caf50;
+    }
+
+    pre {
+      background-color: #f9f9f9;
+      border-radius: 12px;
+      padding: 15px;
+      white-space: pre-wrap;
+      text-align: left;
+      margin-top: 20px;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🍀 네잎클로버 오늘의 운세</h1>
+    <input type="text" id="name" placeholder="이름 입력" />
+    <input type="date" id="birthdate" />
+    <select id="birthhour">
+      <option value="">출생시 선택</option>
+      <option value="0">0시</option>
+<option value="1">1시</option>
+<option value="2">2시</option>
+<option value="3">3시</option>
+<option value="4">4시</option>
+<option value="5">5시</option>
+<option value="6">6시</option>
+<option value="7">7시</option>
+<option value="8">8시</option>
+<option value="9">9시</option>
+<option value="10">10시</option>
+<option value="11">11시</option>
+<option value="12">12시</option>
+<option value="13">13시</option>
+<option value="14">14시</option>
+<option value="15">15시</option>
+<option value="16">16시</option>
+<option value="17">17시</option>
+<option value="18">18시</option>
+<option value="19">19시</option>
+<option value="20">20시</option>
+<option value="21">21시</option>
+<option value="22">22시</option>
+<option value="23">23시</option>
+    </select>
+    <button onclick="getFortune()">운세 보기</button>
+    <pre id="result"></pre>
+  
+    <p style="font-size: 12px; color: #888; margin-top: 30px;">제57대 늘 자연과학대학 학생회</p>
+</div>
+
+  <script>
+    async function getFortune() {
+      const name = document.getElementById('name').value;
+      const birthdate = document.getElementById('birthdate').value;
+      const birthhour = document.getElementById('birthhour').value;
+
+      const res = await fetch('https://your-backend-url.onrender.com/api/fortune', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, birthdate, birthhour })
+      });
+
+      const data = await res.json();
+      document.getElementById('result').innerText = data.fortune;
+    }
+  </script>
+</body>
+</html>
