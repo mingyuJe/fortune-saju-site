@@ -3,7 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>네잎클로버 사주 운세</title>
+  <title>네잎클로버 오늘의 운세</title>
+
+  <!-- ✅ Kakao SDK -->
+  <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+
+  <!-- ✅ 스타일 -->
   <style>
     body {
       background-color: #f0fff0;
@@ -11,7 +16,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      min-height: 100vh;
       margin: 0;
     }
 
@@ -52,6 +57,12 @@
       background-color: #4caf50;
     }
 
+    .kakao-btn {
+      background-color: #fee500;
+      color: #000;
+      margin-top: 10px;
+    }
+
     pre {
       background-color: #f9f9f9;
       border-radius: 12px;
@@ -74,7 +85,7 @@
     <h1>🍀 네잎클로버 오늘의 운세</h1>
     <input type="text" id="name" placeholder="이름 입력" />
     <input type="date" id="birthdate" />
-    
+
     <select id="birthhour">
       <option value="">출생시 선택</option>
       <option value="unknown">출생 시간을 모릅니다</option>
@@ -90,30 +101,30 @@
     </select>
 
     <button onclick="getFortune()">운세 보기</button>
+    <button class="kakao-btn" onclick="shareKakao()">📤 카카오톡으로 공유하기</button>
     <pre id="result"></pre>
     <p class="footer">제57대 늘 자연과학대학 학생회</p>
   </div>
 
   <script>
-    async function getFortune() {
-      const name = document.getElementById('name').value;
-      const birthdate = document.getElementById('birthdate').value;
-      const birthhour = document.getElementById('birthhour').value;
+    // ✅ Kakao 초기화 (당신의 JS 키로 교체해주세요)
+    Kakao.init('여기에_발급받은_JavaScript_키'); 
 
-      if (!name || !birthdate) {
-        alert("이름과 생년월일은 꼭 입력해주세요!");
-        return;
-      }
-
-      const res = await fetch('https://fortune-saju-backend.onrender.com/api/fortune', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, birthdate, birthhour })
-      });
-
-      const data = await res.json();
-      document.getElementById('result').innerText = data.fortune || "운세를 받아오지 못했습니다.";
-    }
-  </script>
-</body>
-</html>
+    function shareKakao() {
+      Kakao.Share.sendDefault({
+        objectType: 'feed',
+        content: {
+          title: '🍀 네잎클로버 오늘의 운세',
+          description: '이름과 생년월일로 사주 운세를 지금 바로 확인해보세요!',
+          imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/4-leaf_clover_icon.svg/1024px-4-leaf_clover_icon.svg.png',
+          link: {
+            mobileWebUrl: 'https://mingyuJe.github.io/fortune-saju-site/',
+            webUrl: 'https://mingyuJe.github.io/fortune-saju-site/',
+          },
+        },
+        buttons: [
+          {
+            title: '운세 보러 가기',
+            link: {
+              mobileWebUrl: 'https://mingyuJe.github.io/fortune-saju-site/',
+              webUrl: 'https://
