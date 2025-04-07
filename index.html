@@ -106,7 +106,7 @@
       const birthdate = document.getElementById('birthdate').value;
       const birthhour = document.getElementById('birthhour').value;
 
-      const res = await fetch('https://fortune-saju-backend.onrender.com', {
+      const res = await fetch('https://fortune-saju-backend.onrender.com/api/fortune', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, birthdate, birthhour })
