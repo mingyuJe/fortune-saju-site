@@ -74,18 +74,21 @@
     <h1>🍀 네잎클로버 오늘의 운세</h1>
     <input type="text" id="name" placeholder="이름 입력" />
     <input type="date" id="birthdate" />
+    
     <select id="birthhour">
       <option value="">출생시 선택</option>
-      <!-- 시간 옵션 자동 생성 -->
+      <option value="unknown">출생 시간을 모릅니다</option>
       <script>
+        const birthSelect = document.currentScript.parentElement;
         for (let i = 0; i < 24; i++) {
           const option = document.createElement("option");
           option.value = i;
           option.textContent = `${i}시`;
-          document.write(option.outerHTML);
+          birthSelect.appendChild(option);
         }
       </script>
     </select>
+
     <button onclick="getFortune()">운세 보기</button>
     <pre id="result"></pre>
     <p class="footer">제57대 늘 자연과학대학 학생회</p>
@@ -97,6 +100,11 @@
       const birthdate = document.getElementById('birthdate').value;
       const birthhour = document.getElementById('birthhour').value;
 
+      if (!name || !birthdate) {
+        alert("이름과 생년월일은 꼭 입력해주세요!");
+        return;
+      }
+
       const res = await fetch('https://fortune-saju-backend.onrender.com/api/fortune', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -104,7 +112,7 @@
       });
 
       const data = await res.json();
-      document.getElementById('result').innerText = data.fortune;
+      document.getElementById('result').innerText = data.fortune || "운세를 받아오지 못했습니다.";
     }
   </script>
 </body>
